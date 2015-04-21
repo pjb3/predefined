@@ -46,8 +46,9 @@ module Predefined
       sql.to_s.split(/\n/).map(&:strip).join(' ')
     end
 
-    def initialize(name)
+    def initialize(name, options={})
       @name = name
+      @options = options
     end
 
     def template
@@ -60,32 +61,36 @@ module Predefined
       raise "Not Implemented"
     end
 
+    def predefined_helper_query(template_name)
+      predefined_helper_query_class.new(template_name)
+    end
+
     def select_all(template_name, params=nil)
-      predefined_helper_query_class.new(template_name).select_all(params)
+      predefined_helper_query(template_name).select_all(params)
     end
 
     def select_one(template_name, params=nil)
-      predefined_helper_query_class.new(template_name).select_one(params)
+      predefined_helper_query(template_name).select_one(params)
     end
 
     def select_rows(template_name, params=nil)
-      predefined_helper_query_class.new(template_name).select_rows(params)
+      predefined_helper_query(template_name).select_rows(params)
     end
 
     def select_values(template_name, params=nil)
-      predefined_helper_query_class.new(template_name).select_values(params)
+      predefined_helper_query(template_name).select_values(params)
     end
 
     def select_value(template_name, params=nil)
-      predefined_helper_query_class.new(template_name).select_value(params)
+      predefined_helper_query(template_name).select_value(params)
     end
 
     def select_object(template_name, klass, params=nil)
-      predefined_helper_query_class.new(template_name).select_object(klass, params)
+      predefined_helper_query(template_name).select_object(klass, params)
     end
 
     def select_objects(template_name, klass, params=nil)
-      predefined_helper_query_class.new(template_name).select_objects(klass, params)
+      predefined_helper_query(template_name).select_objects(klass, params)
     end
   end
 end

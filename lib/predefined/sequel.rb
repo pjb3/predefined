@@ -2,16 +2,24 @@ require 'predefined/query'
 
 module Predefined
   class SequelQuery < Query
+    def db
+      @options[:db]
+    end
+
+    def dataset(params=nil)
+      db.fetch(template, params || {})
+    end
+
     def to_sql(params=nil)
-      raise "TODO: Implement Me"
+      dataset(params).sql
     end
 
     def select_all(params=nil)
-      raise "TODO: Implement Me"
+      dataset(params).all
     end
 
     def select_one(params=nil)
-      raise "TODO: Implement Me"
+      dataset(params).first
     end
 
     def select_rows(params=nil)
@@ -23,7 +31,7 @@ module Predefined
     end
 
     def select_value(params=nil)
-      raise "TODO: Implement Me"
+      dataset(params).get
     end
 
     def select_object(klass, params=nil)
